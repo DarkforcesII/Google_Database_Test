@@ -29,8 +29,8 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity {
 
     // String URL
-    String sheetURL = "https://spreadsheets.google.com/feeds/list/1mf9HXeJLNFDaBXYgBrdqDBIWj" +
-            "noNRf_K1WEr_wYSZso/od6/public/values?alt=json";
+    String sheetURL = "https://docs.google.com/spreadsheets/d/" +
+            "1mf9HXeJLNFDaBXYgBrdqDBIWjnoNRf_K1WEr_wYSZso/edit#gid=0";
 
     // creating a variable for our array list, adapter class,
     // recycler view, progressbar, nested scroll view
@@ -58,13 +58,15 @@ public class MainActivity extends AppCompatActivity {
     private void getDataFromAPI() {
 
         // creating a string variable for URL.
-        String url = sheetURL;
+        String subString = sheetURL.substring(39,83);
+        String jsonUrl = "https://spreadsheets.google.com/feeds/list/" + subString +
+                "/od6/public/values?alt=json";
 
         // creating a new variable for our request queue
         RequestQueue queue = Volley.newRequestQueue(MainActivity.this);
 
         // creating a variable for our JSON object request and passing our URL to it.
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, jsonUrl, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 loadingPB.setVisibility(View.GONE);
